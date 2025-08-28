@@ -1176,6 +1176,7 @@ void DebugAdapterProtocol::on_debug_data(const String &p_msg, const Array &p_dat
 
 			parse_object(remote_obj);
 		}
+#ifndef DISABLE_DEPRECATED
 	} else if (p_msg == "scene:inspect_object") {
 		if (!p_data.is_empty()) {
 			// Legacy single object response format.
@@ -1184,6 +1185,7 @@ void DebugAdapterProtocol::on_debug_data(const String &p_msg, const Array &p_dat
 
 			parse_object(remote_obj);
 		}
+#endif // DISABLE_DEPRECATED
 	} else if (p_msg == "evaluation_return") {
 		// An evaluation was requested from the debuggee; parse it.
 		DebuggerMarshalls::ScriptStackVariable remote_evaluation;

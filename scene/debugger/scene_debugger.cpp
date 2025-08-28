@@ -167,6 +167,7 @@ Error SceneDebugger::_msg_inspect_objects(const Array &p_args) {
 	return OK;
 }
 
+#ifndef DISABLE_DEPRECATED
 Error SceneDebugger::_msg_inspect_object(const Array &p_args) {
 	ERR_FAIL_COND_V(p_args.is_empty(), ERR_INVALID_DATA);
 	// Legacy compatibility: convert single object ID to new format, then send single object response.
@@ -184,6 +185,7 @@ Error SceneDebugger::_msg_inspect_object(const Array &p_args) {
 	EngineDebugger::get_singleton()->send_message("scene:inspect_object", arr);
 	return OK;
 }
+#endif // DISABLE_DEPRECATED
 
 Error SceneDebugger::_msg_clear_selection(const Array &p_args) {
 	RuntimeNodeSelect::get_singleton()->_clear_selection();
@@ -514,7 +516,9 @@ void SceneDebugger::_init_message_handlers() {
 	message_handlers["request_scene_tree"] = _msg_request_scene_tree;
 	message_handlers["save_node"] = _msg_save_node;
 	message_handlers["inspect_objects"] = _msg_inspect_objects;
+#ifndef DISABLE_DEPRECATED
 	message_handlers["inspect_object"] = _msg_inspect_object;
+#endif // DISABLE_DEPRECATED
 	message_handlers["clear_selection"] = _msg_clear_selection;
 	message_handlers["suspend_changed"] = _msg_suspend_changed;
 	message_handlers["next_frame"] = _msg_next_frame;
